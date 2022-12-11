@@ -27,5 +27,4 @@ jobs:
           git checkout openwrt-19.07
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          make menuconfig
-          make -j$(nproc)
+          make
