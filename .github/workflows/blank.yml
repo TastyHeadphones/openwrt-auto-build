@@ -34,4 +34,4 @@ jobs:
         with:
           name: opewrt-img
           path: |
-            bin/targets
+            openwrt/bin
