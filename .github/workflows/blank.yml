@@ -28,7 +28,7 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           make defconfig
-          make -j1 V=s
+          make -j$(nproc) V=99
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
