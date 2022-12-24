@@ -18,16 +18,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build OpenWrt
+      - name: Install Packages
         run: |
           sudo apt-get update
           sudo apt install build-essential clang flex g++ gawk gcc-multilib gettext git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev file wget python2
+      - name: Clone and checkout
+        run: |
           git clone https://github.com/openwrt/openwrt.git
-          cp .config openwrt/.config
           cd openwrt
           git checkout openwrt-19.07
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
+      - name: Pick config
+        run: cp .config openwrt/.config
+      - name: Update feeds
+        run: cd openwrt && ./scripts/feeds update -a
+      - name: Install feeds
+        run: cd openwrt && ./scripts/feeds install -a
+      - name: Make Openwrt
+        run: |
+          cd openwrt
           make defconfig
           make -j$(nproc) V=99
       - name: Archive production artifacts
